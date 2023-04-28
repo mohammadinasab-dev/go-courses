@@ -12,8 +12,6 @@ import "fmt"
 	5- declare a new variable in each iteration to save the changes for second array assignment.
 	6- to change the the original value we should use the slice[index] directly,
 	   instead of iterartion variables which is copy of iteration entry.
-	7-
-
 */
 
 func main() {
