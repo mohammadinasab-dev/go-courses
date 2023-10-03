@@ -2,50 +2,30 @@ package parser
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 )
 
-type raw []byte
+/*
+	The server sent two almost distinct messages, one for success and the other for failure.
+	The exception is that both success and failure have a common field named 'status'.
 
-func (x *raw) UnmarshalJSON(b []byte) error {
-	err := json.Unmarshal(b, &x)
-	return err
-}
+*/
 
-type Person struct {
-	Name string          `json:"name"`
-	Age  int             `json:"age"`
-	Data json.RawMessage `json:"data"`
-}
 
-func Raw() {
-	jsonStr := `{
-        "name": "John",
-        "age": 30,
-        "data": {
-            "email": "john@example.com",
-            "phone": "123-456-7890",
-			"number": 123
-        }
-    }`
+/*
+	Here is the sample data stream. Try both one after the other.
+*/
+// var data2 []byte = []byte(`[{"status":"ok","ReserveNumber":["125", "456"]}, {"status":"not ","ErrCode":"502", "Reason":"That's it"}]`)
+var data2 []byte = []byte(`[{"status":"not ok","ErrCode":"502", "Reason":"null"}]`)
+// var data3 []byte = []byte(`[{"status":"ok","ReserveNumber":["125", "456"]}]`)
+// var data2 []byte = []byte(`[{"hello":"Bye"}]`)
 
-	var p Person
-	err := json.Unmarshal([]byte(jsonStr), &p)
-	if err != nil {
-		panic(err)
+
+
+func UnMarshalUnKnown_03() {
+	r := make([]response, 0)
+	if err := json.Unmarshal(data2, &r); err != nil {
+		log.Println(err)
 	}
-
-	fmt.Println(p.Name) // Output: John
-	fmt.Println(p.Age)  // Output: 30
-
-	// Unmarshal the raw message into a map[string]string
-	var data map[string]interface{}
-	err = json.Unmarshal(p.Data, &data)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(data["email"]) // Output: john@example.com
-	fmt.Println(data["phone"]) // Output: 123-456-7890
-	fmt.Printf("%+#v\n", data["number"])
+	log.Printf("%+v", r)
 }

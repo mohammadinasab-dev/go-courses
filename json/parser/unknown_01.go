@@ -2,32 +2,34 @@ package parser
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
+	"os"
 )
 
-// The server sent two distinct messages, one for success and the other for failure.
+/*
+	UNKNOWN INPUT
 
-type success01 struct {
-	ReserveNumber []string
-}
+	- string or number
+	- slice or string
 
-type errorResult struct {
-	ErrCode string
-	Reason  string
-}
+	- you can modify the flight model to have field with custom data type (IntOrString, SliceOrString)
+	- as already know these custom type implement the `Unmarshaler interface` ...
+*/
 
-type res struct {
-	success01
-	errorResult
-}
+func UnMarshalUnKnown_01() {
 
-var data []byte = []byte(`[{"ErrCode":"502", "Reason":"that's it"}]`)
-// var data []byte = []byte(`[{"ReserveNumber":["125", "456"]}]`)
-
-func Unmarshal_01() {
-	r := make([]res, 0)
-	if err := json.Unmarshal(data, &r); err != nil {
-		log.Println(err)
+	file, err := os.ReadFile("sample_00.json")
+	if err != nil {
+		fmt.Printf("failed to read file %v", err)
+		return
 	}
-	log.Printf("%+v", r)
+	var f flight
+	err = json.Unmarshal(file, &f)
+	if err != nil {
+		fmt.Printf("failed to Decode json file %v", err)
+		return
+	}
+	// fmt.Printf("the fare is: %#v\n", *f.Fare)
+	fmt.Printf("\n%#+v\n", f)
+
 }

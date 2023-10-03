@@ -8,7 +8,10 @@ import (
 	"time"
 )
 
-type sample_01 struct {
+/*
+here we can modify the struct with different json tag and options.
+*/
+type flight struct {
 	ID          string `json:"-"`
 	Origin      string `json:"origin,omitempty"`
 	Destination string `json:"-"`
@@ -83,7 +86,6 @@ func (x *SliceOrString) UnmarshalJSON(b []byte) error {
 type success struct {
 	Status        string
 	ReserveNumber []string
-	lop json.RawMessage
 }
 
 type failure struct {
@@ -92,19 +94,25 @@ type failure struct {
 	Reason  string
 }
 
-type combinations struct {
-	success
-	failure
-}
-
 type response struct {
 	result interface{}
 }
 
-// var data2 []byte = []byte(`[{"status":"ok","ReserveNumber":["125", "456"]}, {"status":"not ","ErrCode":"502", "Reason":"That's it"}]`)
+func (x *response) UnmarshalJSON(b []byte) error {
+	var success success
+	if err := json.Unmarshal(b, &success); err != nil {
+		return err
+	}
 
-var data2 []byte = []byte(`[{"status":"not ok","ErrCode":"502", "Reason":"null"}]`)
-
-// var data3 []byte = []byte(`[{"status":"ok","ReserveNumber":["125", "456"]}]`)
-
-// var data2 []byte = []byte(`[{"hello":"Bye"}]`)
+	//Think about it why these if condition is `necessary`!
+	if success.Status == "ok" {
+		x.result = success
+		return nil
+	}
+	var failure failure
+	if err := json.Unmarshal(b, &failure); err != nil {
+		return err
+	}
+	x.result = failure
+	return nil
+}

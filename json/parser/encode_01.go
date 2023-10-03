@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 )
 
-var s sample_01 = sample_01{
+var s flight = flight{
 	ID: uuid.NewString(),
 	// Origin:      "KIH",
 	Destination: "THR",

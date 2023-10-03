@@ -42,7 +42,8 @@ import (
      e.g. DisallowUnknownFields
 */
 
-func DecodeSample_00() {
+// simple decoder without any specific options
+func DecodeSample_01() {
 
 	file, err := os.Open("sample_00.json")
 	if err != nil {
@@ -51,7 +52,7 @@ func DecodeSample_00() {
 	}
 	defer file.Close()
 
-	var f sample_01
+	var f flight
 	if err := json.NewDecoder(file).Decode(&f); err != nil {
 		fmt.Printf("failed to Decode json file %v\n", err)
 		return
@@ -64,102 +65,15 @@ func DecodeSample_00() {
 
 }
 
-func UnMarshalSample_00() {
-
-	file, err := os.ReadFile("sample_00.json")
-	if err != nil {
-		fmt.Printf("failed to read file %v", err)
-		return
-	}
-	var f sample_01
-	err = json.Unmarshal(file, &f)
-	if err != nil {
-		fmt.Printf("failed to Decode json file %v", err)
-		return
-	}
-	// fmt.Printf("the fare is: %#v\n", *f.Fare)
-	fmt.Printf("\n%#v\n", f)
-
-}
-
-/*
-read multiple json object in the same stream.
-*/
-func DecodeSample_01() {
-
-	file, err := os.Open("sample_01.txt")
-	if err != nil {
-		fmt.Printf("failed to load file %v", err)
-		return
-	}
-	defer file.Close()
-	decoder := json.NewDecoder(file)
-
-	for {
-		var f sample_01
-
-		err = decoder.Decode(&f)
-		if err != nil {
-			fmt.Printf("failed to Decode json file %v\n", err)
-			return
-		}
-
-		fmt.Printf("\n%+#v\n", f)
-	}
-
-}
-
+// simple unmarshaler without any specific options
 func UnMarshalSample_01() {
 
-	file, err := os.ReadFile("sample_01.txt")
-	if err != nil {
-		fmt.Printf("failed to read file %v", err)
-		return
-	}
-	for {
-
-		var f sample_01
-		err = json.Unmarshal(file, &f)
-		if err != nil {
-			fmt.Printf("failed to Decode json file %v", err)
-			return
-		}
-		fmt.Printf("\n%#v\n", f)
-	}
-
-}
-
-func DecodeSample_001() {
-
-	file, err := os.Open("sample_00.json")
-	if err != nil {
-		fmt.Printf("failed to load file %v", err)
-		return
-	}
-	defer file.Close()
-
-	var f sample_01
-
-	decoder := json.NewDecoder(file)
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&f)
-	if err != nil {
-		fmt.Printf("failed to Decode json file %v\n", err)
-		return
-	}
-
-	fmt.Printf("\n%+#v\n", f)
-
-}
-
-func UnMarshalSample_000() {
-
 	file, err := os.ReadFile("sample_00.json")
 	if err != nil {
 		fmt.Printf("failed to read file %v", err)
 		return
 	}
-	var f interface{}
+	var f flight
 	err = json.Unmarshal(file, &f)
 	if err != nil {
 		fmt.Printf("failed to Decode json file %v", err)

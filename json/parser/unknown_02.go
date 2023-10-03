@@ -6,30 +6,31 @@ import (
 )
 
 /*
-	The server sent two almost distinct messages, one for success and the other for failure.
-	The exception is that both success and failure have a common field named 'status'.
+	- The server sent two distinct messages, one for reserve and the other for failure.
+	- Think about it! here in this file there is no need to implement th `Unmarshaler interface`.
+*/ 
 
-*/
-
-
-func (x *combinations) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &x.success); err != nil {
-		return err
-	} //else{
-	// 	return nil
-	// }
-
-	if x.success.Status == "ok" { // we absoloutly should check the status 
-		return nil
-	}
-	x.success = success{}
-	return json.Unmarshal(b, &x.failure)
+type reserve struct {
+	ReserveNumber []string
 }
 
+type errorResult struct {
+	ErrCode string
+	Reason  string
+}
 
-func Unmarshal_02() {
-	r := make([]combinations, 0)
-	if err := json.Unmarshal(data2, &r); err != nil {
+type res struct {
+	reserve
+	errorResult
+}
+
+// Here is the sample data stream. Try both one after the other.
+var data []byte = []byte(`[{"ErrCode":"502", "Reason":"that's it"}]`)
+// var data []byte = []byte(`[{"ReserveNumber":["125", "456"]}]`)
+
+func UnMarshalUnKnown_02() {
+	r := make([]res, 0)
+	if err := json.Unmarshal(data, &r); err != nil {
 		log.Println(err)
 	}
 	log.Printf("%+v", r)
