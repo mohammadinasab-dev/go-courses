@@ -1,0 +1,23 @@
+{
+    "Origin": "SYZ",
+    "Destination": "THR",
+    "Number": "58429",
+    "Class": "ECO,BCO,EEC",
+    "Airline": "ماهان",
+    "Aircraft": "MD 805",
+    "Seats": "5",
+    "Fare": {
+        "Adl": 18000000,
+        "Chd": 15000000,
+        "Inf": 7500000
+    },
+    "Tax": {
+        "Adl": 1230000,
+        "Chd": 980000,
+        "Inf": 30000
+    },
+    "TotalPrice": 37500000,
+    "DepartureDate": "2023/09/23 09:00",
+    "ArrivalDate": "2023/09/23 10:30",
+    "CreatedAt": "2023-09-23"
+}
