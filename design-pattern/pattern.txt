@@ -1,0 +1,13 @@
+Behavioral Patterns: Behavioral patterns focus on the interaction and communication between objects, 
+defining how objects behave and collaborate to achieve specific tasks or responsibilities. 
+These patterns help to manage the algorithms and responsibilities of objects within a system. 
+Examples of behavioral patterns include Observer, Strategy, Command, and Iterator.
+
+Structural Design Patterns: Structural design patterns focus on the composition and structure of objects, 
+defining how classes and objects are connected or organized to form larger structures. 
+These patterns deal with relationships between objects and aim to provide flexible ways to create and manage object structures. 
+Examples of structural design patterns include Adapter, Decorator, Composite, and Proxy.
+
+Creational design patterns focus on the process of object creation, providing mechanisms for creating objects in a flexible and decoupled manner. 
+These patterns aim to abstract the instantiation process and hide the complexities of object creation.
+Examples of Creational design patterns include Singleton Pattern, Builder Pattern, Factory Method Pattern
